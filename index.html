@@ -75,14 +75,27 @@
 
     <style>
       :root {
-        --bg: #0b0b0b;
-        --glass: rgba(0, 0, 0, 0.55);
-        --border: rgba(255, 255, 255, 0.14);
-        --text: rgba(255, 255, 255, 0.92);
-        --muted: rgba(255, 255, 255, 0.65);
-        --radius: 14px;
+        --bg: #050505;
+        --bg-gradient: radial-gradient(
+          ellipse at top,
+          rgba(20, 20, 30, 0.4) 0%,
+          transparent 50%
+        );
+        --glass: rgba(15, 15, 20, 0.65);
+        --glass-hover: rgba(25, 25, 35, 0.75);
+        --border: rgba(255, 255, 255, 0.08);
+        --border-hover: rgba(255, 255, 255, 0.16);
+        --text: rgba(255, 255, 255, 0.95);
+        --muted: rgba(255, 255, 255, 0.5);
+        --accent: #3b82f6;
+        --accent-glow: rgba(59, 130, 246, 0.3);
+        --radius: 16px;
+        --radius-lg: 20px;
         --safe-top: env(safe-area-inset-top);
         --safe-bottom: env(safe-area-inset-bottom);
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6),
+          0 8px 16px rgba(0, 0, 0, 0.4);
       }
 
       html,
@@ -92,9 +105,21 @@
         background: var(--bg);
         color: var(--text);
         overflow: hidden;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: var(--bg-gradient);
+        pointer-events: none;
+        z-index: 0;
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -104,26 +129,34 @@
         width: 100%;
         display: grid;
         grid-template-rows: auto 1fr auto;
-        padding-top: calc(10px + var(--safe-top));
-        padding-bottom: calc(10px + var(--safe-bottom));
-        gap: 10px;
+        padding-top: calc(16px + var(--safe-top));
+        padding-bottom: calc(16px + var(--safe-bottom));
+        gap: 16px;
+        position: relative;
+        z-index: 1;
       }
 
       .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 12px;
-        gap: 10px;
+        padding: 0 16px;
+        gap: 16px;
       }
 
       .title {
-        font-size: 13px;
-        color: var(--muted);
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 45vw;
+        background: linear-gradient(135deg, var(--text), var(--muted));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .controls {
@@ -136,33 +169,45 @@
         border: 1px solid var(--border);
         background: var(--glass);
         color: var(--text);
-        padding: 10px 12px;
+        padding: 11px 16px;
         border-radius: var(--radius);
         cursor: pointer;
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
         -webkit-tap-highlight-color: transparent;
         display: flex;
         align-items: center;
         gap: 8px;
         font-size: 14px;
+        font-weight: 500;
         line-height: 1;
         user-select: none;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn:hover {
+        background: var(--glass-hover);
+        border-color: var(--border-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       }
 
       .btn:active {
-        transform: scale(0.98);
+        transform: translateY(0);
+        box-shadow: var(--shadow-sm);
       }
 
       .btn.icon {
-        width: 44px;
+        width: 48px;
         justify-content: center;
-        padding: 10px 0;
+        padding: 11px 0;
       }
 
       .viewer {
         display: grid;
         place-items: center;
-        padding: 0 10px;
+        padding: 0 16px;
         min-height: 0;
       }
 
@@ -171,7 +216,7 @@
         height: 100%;
         max-width: 1200px;
         max-height: 820px;
-        border-radius: 18px;
+        border-radius: var(--radius-lg);
         position: relative;
       }
 
@@ -181,11 +226,24 @@
         display: grid;
         place-items: center;
         position: relative;
-        filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.55));
+        filter: drop-shadow(var(--shadow-lg));
+        animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
 
       #book .page {
-        background: #101010;
+        background: #0a0a0a;
+        border-radius: 2px;
       }
 
       #book img {
@@ -193,91 +251,162 @@
         height: 100%;
         object-fit: contain;
         display: block;
-        background: #101010;
+        background: #0a0a0a;
       }
 
       .bottombar {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 0 12px;
+        gap: 12px;
+        padding: 0 16px;
       }
 
       .pager {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         flex: 1;
         border: 1px solid var(--border);
         background: var(--glass);
         border-radius: var(--radius);
-        padding: 10px 12px;
-        backdrop-filter: blur(10px);
+        padding: 12px 16px;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
         min-width: 0;
+        box-shadow: var(--shadow-sm);
+        transition: border-color 0.25s ease;
+      }
+
+      .pager:hover {
+        border-color: var(--border-hover);
       }
 
       .pageText {
-        font-size: 13px;
-        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        color: var(--text);
         white-space: nowrap;
         min-width: 70px;
       }
 
       input[type="range"] {
         width: 100%;
-        accent-color: white;
+        height: 6px;
+        accent-color: var(--accent);
+        cursor: pointer;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        box-shadow: 0 0 8px var(--accent-glow);
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        box-shadow: 0 0 8px var(--accent-glow);
       }
 
       .msg {
         position: fixed;
-        left: 12px;
-        right: 12px;
-        bottom: calc(70px + var(--safe-bottom));
-        text-align: center;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        z-index: 100;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+      }
+
+      .msg.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .spinner {
+        width: 48px;
+        height: 48px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loadText {
+        font-size: 14px;
+        font-weight: 500;
         color: var(--muted);
-        font-size: 13px;
-        z-index: 80;
-        pointer-events: none;
+        letter-spacing: 0.02em;
       }
 
       .tapHint {
         display: none;
-        font-size: 12px;
+        font-size: 13px;
         color: var(--muted);
-        padding-left: 12px;
-        padding-right: 12px;
+        padding: 0 16px;
+        text-align: center;
+        opacity: 0.7;
       }
 
       @media (max-width: 640px) {
         .title {
           max-width: 60vw;
+          font-size: 14px;
         }
         #book {
-          max-height: 78vh;
+          max-height: 76vh;
         }
         .tapHint {
           display: block;
         }
         .btn.icon {
-          width: 46px;
+          width: 48px;
         }
         .btn span.label {
           display: none;
         }
         .btn {
-          border-radius: 16px;
+          padding: 12px 14px;
         }
         .pager {
-          padding: 10px;
+          padding: 12px 14px;
         }
         .pageText {
-          min-width: 62px;
+          min-width: 65px;
+          font-size: 13px;
+        }
+        .stage {
+          padding-top: calc(12px + var(--safe-top));
+          padding-bottom: calc(12px + var(--safe-bottom));
+          gap: 12px;
         }
       }
 
       @media (max-height: 700px) {
         #book {
-          max-height: 74vh;
+          max-height: 72vh;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
@@ -337,7 +466,12 @@
       </div>
     </div>
 
-    <div class="msg" id="msg">Loading flipbook…</div>
+    <div class="msg" id="msg">
+      <div class="loader">
+        <div class="spinner"></div>
+        <div class="loadText">Loading flipbook...</div>
+      </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="assets/js/turn.min.js"></script>
@@ -418,11 +552,12 @@
 
       function init() {
         if (!window.jQuery) {
-          msg.textContent = "jQuery did not load. Check your connection.";
+          msg.querySelector(".loadText").textContent =
+            "jQuery did not load. Check your connection.";
           return;
         }
         if (!jQuery.fn.turn) {
-          msg.textContent = "Turn.js did not load.";
+          msg.querySelector(".loadText").textContent = "Turn.js did not load.";
           return;
         }
 
@@ -441,7 +576,11 @@
           updateUI(page);
         });
 
-        msg.textContent = "";
+        // Hide loader with smooth fade out
+        setTimeout(() => {
+          msg.classList.add("hidden");
+        }, 400);
+
         updateUI(1);
 
         setTimeout(() => {
