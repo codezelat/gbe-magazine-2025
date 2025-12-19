@@ -82,8 +82,8 @@ Visit the live demo at: [magazine.gbeaward.com](https://magazine.gbeaward.com)
 
 ```
 gbe-magazine-2025/
-├── index.html              # Redirect to flip.html
-├── flip.html              # Main flipbook application
+├── index.html              # Main flipbook application
+├── index.old.html         # Old redirect file (can be deleted)
 ├── CNAME                  # Custom domain configuration
 ├── assets/
 │   └── js/
@@ -142,7 +142,7 @@ $("#book").turn({
 
 ### Changing the Number of Pages
 
-1. Update `totalPages` constant in `flip.html`:
+1. Update `totalPages` constant in `index.html`:
    ```javascript
    const totalPages = 82; // Change this number
    ```
@@ -168,7 +168,7 @@ $("#book").turn({
 
 ### Customizing Colors
 
-Modify the CSS variables in the `:root` selector in `flip.html`:
+Modify the CSS variables in the `:root` selector in `index.html`:
 
 ```css
 :root {
@@ -180,7 +180,7 @@ Modify the CSS variables in the `:root` selector in `flip.html`:
 
 ### Changing Title
 
-Update the title in two places in `flip.html`:
+Update the title in two places in `index.html`:
 
 ```html
 <title>Your Magazine Title</title>
@@ -205,6 +205,59 @@ Update the title in two places in `flip.html`:
 - **Backdrop Filter** - Chrome 76+, Safari 14+, Firefox 103+
 - **Safe Area Insets** - Safari iOS 11+ (for notched devices)
 - **Fullscreen API** - All modern browsers
+
+## 🔍 SEO Optimization
+
+The application is fully optimized for search engines and social media sharing:
+
+### Implemented SEO Features
+
+1. **Meta Tags**
+   - Comprehensive title and description
+   - Keywords optimization
+   - Language and author tags
+   - Robots directives for proper indexing
+
+2. **Open Graph Protocol**
+   - Facebook and LinkedIn rich previews
+   - Custom title, description, and images
+   - Proper URL canonicalization
+
+3. **Twitter Cards**
+   - Large image card format
+   - Optimized preview content
+   - Enhanced social sharing
+
+4. **Structured Data (JSON-LD)**
+   - Schema.org markup for better understanding
+   - WebPage and Organization entities
+   - Rich search results eligibility
+
+5. **Technical SEO**
+   - Semantic HTML structure
+   - Canonical URL declaration
+   - Mobile-friendly responsive design
+   - Fast loading with lazy images
+   - Proper alt texts on images
+   - Clean URL structure (no ugly `/flip.html`)
+
+### Social Media Preview
+
+When shared on social platforms, the link displays:
+- **Title**: GBE Awards Magazine 2025 | Interactive Digital Flipbook
+- **Description**: Experience the magazine with realistic page-turning animations
+- **Image**: First page of the magazine (page-01.jpg)
+
+### Customizing SEO
+
+To update SEO content, edit the `<head>` section in [index.html](index.html):
+
+```html
+<!-- Update these meta tags -->
+<meta name="description" content="Your new description" />
+<meta property="og:title" content="Your social media title" />
+<meta property="og:image" content="https://your-domain.com/preview-image.jpg" />
+```
 
 ## ⚡ Performance Optimization
 
@@ -299,7 +352,7 @@ The application automatically adapts to mobile devices:
 
 ### Issue: Pages not loading locally
 
-**Solution:** You must use a web server. Opening `flip.html` directly in a browser (`file://` protocol) won't work due to CORS restrictions.
+**Solution:** You must use a web server. Opening `index.html` directly in a browser (`file://` protocol) won't work due to CORS restrictions.
 
 ### Issue: jQuery/Turn.js not loading
 
@@ -337,7 +390,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For issues or questions:
 - Open an issue on GitHub
-- Contact: [your-email@example.com]
+- Contact: [info@gbeaward.com]
 
 ---
 
