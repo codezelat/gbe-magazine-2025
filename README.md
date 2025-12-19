@@ -52,30 +52,34 @@ Visit the live demo at: [magazine.gbeaward.com](https://magazine.gbeaward.com)
 ### Local Development
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/gbe-magazine-2025.git
    cd gbe-magazine-2025
    ```
 
 2. **Start a local web server**
-   
+
    Using Python 3:
+
    ```bash
    python3 -m http.server 8000
    ```
-   
+
    Or using Python 2:
+
    ```bash
    python -m SimpleHTTPServer 8000
    ```
-   
+
    Or using Node.js (with `http-server`):
+
    ```bash
    npx http-server -p 8000
    ```
 
 3. **Open in browser**
-   
+
    Navigate to `http://localhost:8000` in your web browser
 
 ## 📁 Project Structure
@@ -117,12 +121,12 @@ The application uses CSS custom properties (variables) for theming:
 
 ```css
 :root {
-  --bg: #0b0b0b;              /* Background color */
+  --bg: #0b0b0b; /* Background color */
   --glass: rgba(0, 0, 0, 0.55); /* Glass effect */
   --border: rgba(255, 255, 255, 0.14); /* Border color */
-  --text: rgba(255, 255, 255, 0.92);   /* Text color */
-  --muted: rgba(255, 255, 255, 0.65);  /* Muted text */
-  --radius: 14px;              /* Border radius */
+  --text: rgba(255, 255, 255, 0.92); /* Text color */
+  --muted: rgba(255, 255, 255, 0.65); /* Muted text */
+  --radius: 14px; /* Border radius */
 }
 ```
 
@@ -130,11 +134,11 @@ The application uses CSS custom properties (variables) for theming:
 
 ```javascript
 $("#book").turn({
-  autoCenter: true,      // Center the book in the viewport
+  autoCenter: true, // Center the book in the viewport
   display: displayMode(), // 'single' or 'double' based on screen size
-  gradients: true,       // Enable gradient shadows
-  acceleration: true,    // Hardware acceleration
-  duration: 650,         // Page turn animation duration (ms)
+  gradients: true, // Enable gradient shadows
+  acceleration: true, // Hardware acceleration
+  duration: 650, // Page turn animation duration (ms)
 });
 ```
 
@@ -143,11 +147,13 @@ $("#book").turn({
 ### Changing the Number of Pages
 
 1. Update `totalPages` constant in `index.html`:
+
    ```javascript
    const totalPages = 82; // Change this number
    ```
 
 2. Update slider max value:
+
    ```html
    <input id="slider" type="range" min="1" max="82" value="1" />
    ```
@@ -172,7 +178,7 @@ Modify the CSS variables in the `:root` selector in `index.html`:
 
 ```css
 :root {
-  --bg: #0b0b0b;              /* Change background */
+  --bg: #0b0b0b; /* Change background */
   --text: rgba(255, 255, 255, 0.92); /* Change text color */
   /* ... other variables */
 }
@@ -190,13 +196,13 @@ Update the title in two places in `index.html`:
 
 ## 🌐 Browser Compatibility
 
-| Browser | Minimum Version | Notes |
-|---------|----------------|-------|
-| Chrome | 90+ | Full support |
-| Firefox | 88+ | Full support |
-| Safari | 14+ | Full support, iOS safe area supported |
-| Edge | 90+ | Full support |
-| Opera | 76+ | Full support |
+| Browser | Minimum Version | Notes                                 |
+| ------- | --------------- | ------------------------------------- |
+| Chrome  | 90+             | Full support                          |
+| Firefox | 88+             | Full support                          |
+| Safari  | 14+             | Full support, iOS safe area supported |
+| Edge    | 90+             | Full support                          |
+| Opera   | 76+             | Full support                          |
 
 ### Features by Browser
 
@@ -213,22 +219,26 @@ The application is fully optimized for search engines and social media sharing:
 ### Implemented SEO Features
 
 1. **Meta Tags**
+
    - Comprehensive title and description
    - Keywords optimization
    - Language and author tags
    - Robots directives for proper indexing
 
 2. **Open Graph Protocol**
+
    - Facebook and LinkedIn rich previews
    - Custom title, description, and images
    - Proper URL canonicalization
 
 3. **Twitter Cards**
+
    - Large image card format
    - Optimized preview content
    - Enhanced social sharing
 
 4. **Structured Data (JSON-LD)**
+
    - Schema.org markup for better understanding
    - WebPage and Organization entities
    - Rich search results eligibility
@@ -244,6 +254,7 @@ The application is fully optimized for search engines and social media sharing:
 ### Social Media Preview
 
 When shared on social platforms, the link displays:
+
 - **Title**: GBE Awards Magazine 2025 | Interactive Digital Flipbook
 - **Description**: Experience the magazine with realistic page-turning animations
 - **Image**: First page of the magazine (page-01.jpg)
@@ -264,18 +275,22 @@ To update SEO content, edit the `<head>` section in [index.html](index.html):
 ### Implemented Optimizations
 
 1. **Lazy Loading**
+
    - First 6 pages load eagerly for instant viewing
    - Remaining pages load lazily to reduce initial load time
 
 2. **Hardware Acceleration**
+
    - Turn.js configured with `acceleration: true`
    - CSS transforms utilize GPU rendering
 
 3. **Image Optimization**
+
    - Async decoding enabled: `img.decoding = "async"`
    - Proper `object-fit: contain` prevents layout shifts
 
 4. **Debounced Resize Handler**
+
    - Resize events throttled with 120ms delay
    - Prevents excessive re-calculations
 
@@ -324,16 +339,19 @@ The repository includes a `CNAME` file configured for `magazine.gbeaward.com`. T
 ### Other Hosting Platforms
 
 **Netlify:**
+
 ```bash
 netlify deploy --prod
 ```
 
 **Vercel:**
+
 ```bash
 vercel --prod
 ```
 
 **Cloudflare Pages:**
+
 - Connect GitHub repository
 - Build settings: None required (static site)
 - Build output directory: `/`
@@ -389,6 +407,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 For issues or questions:
+
 - Open an issue on GitHub
 - Contact: [info@gbeaward.com]
 
