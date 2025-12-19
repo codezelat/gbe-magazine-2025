@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>GBE Awards Magazine 2025</title>
+
+    <style>
+      :root {
+        --bg: #0b0b0b;
+        --glass: rgba(0, 0, 0, 0.55);
+        --border: rgba(255, 255, 255, 0.14);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.65);
+        --radius: 14px;
+        --safe-top: env(safe-area-inset-top);
+        --safe-bottom: env(safe-area-inset-bottom);
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        overflow: hidden;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      .stage {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding-top: calc(10px + var(--safe-top));
+        padding-bottom: calc(10px + var(--safe-bottom));
+        gap: 10px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        gap: 10px;
+      }
+
+      .title {
+        font-size: 13px;
+        color: var(--muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 45vw;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .btn {
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text);
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        -webkit-tap-highlight-color: transparent;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        line-height: 1;
+        user-select: none;
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .btn.icon {
+        width: 44px;
+        justify-content: center;
+        padding: 10px 0;
+      }
+
+      .viewer {
+        display: grid;
+        place-items: center;
+        padding: 0 10px;
+        min-height: 0;
+      }
+
+      #book {
+        width: 100%;
+        height: 100%;
+        max-width: 1200px;
+        max-height: 820px;
+        border-radius: 18px;
+        position: relative;
+      }
+
+      .bookShell {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        position: relative;
+        filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.55));
+      }
+
+      #book .page {
+        background: #101010;
+      }
+
+      #book img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        background: #101010;
+      }
+
+      .bottombar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 12px;
+      }
+
+      .pager {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        border-radius: var(--radius);
+        padding: 10px 12px;
+        backdrop-filter: blur(10px);
+        min-width: 0;
+      }
+
+      .pageText {
+        font-size: 13px;
+        color: var(--muted);
+        white-space: nowrap;
+        min-width: 70px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: white;
+      }
+
+      .msg {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: calc(70px + var(--safe-bottom));
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        z-index: 80;
+        pointer-events: none;
+      }
+
+      .tapHint {
+        display: none;
+        font-size: 12px;
+        color: var(--muted);
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      @media (max-width: 640px) {
+        .title {
+          max-width: 60vw;
+        }
+        #book {
+          max-height: 78vh;
+        }
+        .tapHint {
+          display: block;
+        }
+        .btn.icon {
+          width: 46px;
+        }
+        .btn span.label {
+          display: none;
+        }
+        .btn {
+          border-radius: 16px;
+        }
+        .pager {
+          padding: 10px;
+        }
+        .pageText {
+          min-width: 62px;
+        }
+      }
+
+      @media (max-height: 700px) {
+        #book {
+          max-height: 74vh;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="stage">
+      <div class="topbar">
+        <div class="title">GBE Awards Magazine 2025</div>
+
+        <div class="controls">
+          <button class="btn icon" id="prev" aria-label="Previous page">
+            ◀
+          </button>
+          <button class="btn icon" id="next" aria-label="Next page">▶</button>
+          <button class="btn" id="fs">
+            <span class="label">Full screen</span> ⛶
+          </button>
+        </div>
+      </div>
+
+      <div class="tapHint">Tip: swipe left or right to turn pages</div>
+
+      <div class="viewer">
+        <div class="bookShell">
+          <div id="book"></div>
+        </div>
+      </div>
+
+      <div class="bottombar">
+        <div class="pager">
+          <div class="pageText" id="pageText">1 / 82</div>
+          <input id="slider" type="range" min="1" max="82" value="1" />
+        </div>
+      </div>
+    </div>
+
+    <div class="msg" id="msg">Loading flipbook…</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="assets/js/turn.min.js"></script>
+
+    <script>
+      const totalPages = 82;
+      const bookEl = document.getElementById("book");
+      const msg = document.getElementById("msg");
+      const slider = document.getElementById("slider");
+      const pageText = document.getElementById("pageText");
+
+      slider.max = String(totalPages);
+
+      function pageFile(i) {
+        const n = String(i).padStart(2, "0");
+        return `pages/page-${n}.jpg`;
+      }
+
+      function displayMode() {
+        return window.innerWidth < 900 ? "single" : "double";
+      }
+
+      function bookSize() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        const maxW = Math.min(vw - 20, 1200);
+        const maxH = Math.min(vh - 150, 820);
+
+        const isMobile = vw < 900;
+        const aspect = isMobile ? 3 / 4 : 16 / 10;
+
+        let w = maxW;
+        let h = Math.min(maxH, Math.round(w / aspect));
+
+        if (h > maxH) {
+          h = maxH;
+          w = Math.round(h * aspect);
+        }
+
+        return { w, h };
+      }
+
+      function setBookDimensions() {
+        const { w, h } = bookSize();
+        bookEl.style.width = w + "px";
+        bookEl.style.height = h + "px";
+        if (window.jQuery && jQuery.fn.turn) {
+          try {
+            $("#book").turn("size", w, h);
+          } catch (e) {}
+        }
+      }
+
+      function buildPages() {
+        const frag = document.createDocumentFragment();
+        for (let i = 1; i <= totalPages; i++) {
+          const page = document.createElement("div");
+          page.className = "page";
+
+          const img = document.createElement("img");
+          img.loading = i <= 6 ? "eager" : "lazy";
+          img.decoding = "async";
+          img.src = pageFile(i);
+          img.alt = `Page ${i}`;
+
+          page.appendChild(img);
+          frag.appendChild(page);
+        }
+        bookEl.appendChild(frag);
+      }
+
+      function updateUI(current) {
+        const safe = Math.max(1, Math.min(totalPages, current));
+        pageText.textContent = `${safe} / ${totalPages}`;
+        if (String(slider.value) !== String(safe)) slider.value = String(safe);
+      }
+
+      function init() {
+        if (!window.jQuery) {
+          msg.textContent = "jQuery did not load. Check your connection.";
+          return;
+        }
+        if (!jQuery.fn.turn) {
+          msg.textContent = "Turn.js did not load.";
+          return;
+        }
+
+        buildPages();
+        setBookDimensions();
+
+        $("#book").turn({
+          autoCenter: true,
+          display: displayMode(),
+          gradients: true,
+          acceleration: true,
+          duration: 650,
+        });
+
+        $("#book").bind("turned", function (e, page) {
+          updateUI(page);
+        });
+
+        msg.textContent = "";
+        updateUI(1);
+
+        setTimeout(() => {
+          const isMobile = window.innerWidth < 900;
+          $("#book").turn("display", isMobile ? "single" : "double");
+        }, 50);
+      }
+
+      init();
+
+      document
+        .getElementById("prev")
+        .addEventListener("click", () => $("#book").turn("previous"));
+      document
+        .getElementById("next")
+        .addEventListener("click", () => $("#book").turn("next"));
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") $("#book").turn("previous");
+        if (e.key === "ArrowRight") $("#book").turn("next");
+      });
+
+      slider.addEventListener("input", () => {
+        const n = parseInt(slider.value, 10);
+        $("#book").turn("page", n);
+        updateUI(n);
+      });
+
+      document.getElementById("fs").addEventListener("click", () => {
+        const el = document.documentElement;
+        if (!document.fullscreenElement) el.requestFullscreen?.();
+        else document.exitFullscreen?.();
+      });
+
+      let resizeTimer = null;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          setBookDimensions();
+          $("#book").turn("display", displayMode());
+        }, 120);
+      });
+    </script>
+  </body>
+</html>
